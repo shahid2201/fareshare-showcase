@@ -2,27 +2,13 @@
 
 import { motion } from "framer-motion";
 import { Lock, Eye, Database, ShieldCheck } from "lucide-react";
+import { SafeLink } from "./ui/SafeLink";
+import {
+  PRIVACY_PILLARS,
+  PRIVACY_POLICY_QUOTE,
+} from "@/lib/account/privacy-content";
 
-const pillars = [
-  {
-    icon: Database,
-    title: "No stored receipt images",
-    description:
-      "Receipts are processed in memory and discarded. We extract structured data — never hoard your photos.",
-  },
-  {
-    icon: Eye,
-    title: "Minimal data collection",
-    description:
-      "We only collect what's essential to split bills. No tracking, no selling, no surprises.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Transparent AI usage",
-    description:
-      "Every AI step is visible. Confidence scores, editable results, and full control over your data.",
-  },
-];
+const pillarIcons = [Database, Eye, ShieldCheck] as const;
 
 export function PrivacyTrust() {
   return (
@@ -70,22 +56,26 @@ export function PrivacyTrust() {
 
         {/* Pillars */}
         <div className="mb-16 grid gap-6 md:grid-cols-3">
-          {pillars.map((pillar, i) => (
-            <motion.div
-              key={pillar.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.15 }}
-              className="glass group rounded-2xl p-6 transition-all hover:border-emerald-500/20 hover:shadow-lg hover:shadow-emerald-500/5"
-            >
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/10 transition-transform group-hover:scale-110">
-                <pillar.icon className="h-5 w-5 text-emerald-400" />
-              </div>
-              <h3 className="mb-2 text-lg font-semibold text-zinc-200">{pillar.title}</h3>
-              <p className="text-sm leading-relaxed text-zinc-500">{pillar.description}</p>
-            </motion.div>
-          ))}
+          {PRIVACY_PILLARS.map((pillar, i) => {
+            const Icon = pillarIcons[i] ?? ShieldCheck;
+
+            return (
+              <motion.div
+                key={pillar.title}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.15 }}
+                className="glass group rounded-2xl p-6 transition-all hover:border-emerald-500/20 hover:shadow-lg hover:shadow-emerald-500/5"
+              >
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/10 transition-transform group-hover:scale-110">
+                  <Icon className="h-5 w-5 text-emerald-400" />
+                </div>
+                <h3 className="mb-2 text-lg font-semibold text-zinc-200">{pillar.title}</h3>
+                <p className="text-sm leading-relaxed text-zinc-500">{pillar.description}</p>
+              </motion.div>
+            );
+          })}
         </div>
 
         {/* Quote */}
@@ -97,11 +87,15 @@ export function PrivacyTrust() {
         >
           <div className="absolute -top-3 left-8 text-4xl text-emerald-500/30">&ldquo;</div>
           <p className="text-base leading-relaxed text-zinc-300 md:text-lg">
-            FareShare is designed not to collect or store stored receipt image files,
-            precise GPS location, SIN, biometrics, or raw bank credentials.
+            {PRIVACY_POLICY_QUOTE}
           </p>
           <footer className="mt-4 text-sm text-emerald-400/70">
-            — FareShare Privacy Policy
+            <SafeLink
+              href="/privacy"
+              className="transition-colors hover:text-emerald-300"
+            >
+              Read the full Privacy Policy →
+            </SafeLink>
           </footer>
         </motion.blockquote>
       </div>

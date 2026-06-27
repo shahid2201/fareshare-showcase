@@ -4,17 +4,17 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 const friends = [
-  { name: "Alex", color: "#34d399", angle: 0 },
-  { name: "Jordan", color: "#60a5fa", angle: 72 },
-  { name: "Sam", color: "#f472b6", angle: 144 },
-  { name: "Taylor", color: "#fbbf24", angle: 216 },
-  { name: "Casey", color: "#a78bfa", angle: 288 },
+  { name: "Alex", item: "Milk", amount: "$4.99", color: "#34d399", angle: 0 },
+  { name: "Jordan", item: "Bread", amount: "$5.49", color: "#60a5fa", angle: 72 },
+  { name: "Sam", item: "Avocados", amount: "$3.99", color: "#f472b6", angle: 144 },
+  { name: "Taylor", item: "Coffee", amount: "$12.99", color: "#fbbf24", angle: 216 },
+  { name: "You", item: "Snacks", amount: "$11.48", color: "#a78bfa", angle: 288 },
 ];
 
-const splitModes = [
-  { label: "Even Split", active: true },
-  { label: "Custom Split", active: false, badge: "Coming Soon" },
-  { label: "Assign to All", active: false },
+const assignSteps = [
+  "Tap any item on the receipt",
+  "Pick who it belongs to",
+  "They see it under I Need to Pay",
 ];
 
 export function AssignmentFlow() {
@@ -39,23 +39,22 @@ export function AssignmentFlow() {
           className="mb-8 text-center"
         >
           <span className="mb-4 inline-block rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-1.5 text-xs font-medium uppercase tracking-widest text-emerald-400">
-            Fairness Made Beautiful
+            Per-item clarity
           </span>
           <h2
             className="font-display text-3xl font-bold md:text-5xl"
             style={{ fontFamily: "var(--font-syne)" }}
           >
-            Splitting shouldn&apos;t feel like{" "}
-            <span className="text-zinc-500 line-through decoration-emerald-500/50">math</span>
+            Assign items,{" "}
+            <span className="gradient-text">not guesswork</span>
           </h2>
           <p className="mt-4 text-lg text-zinc-400">
-            It should feel like <span className="text-emerald-400">clarity</span>.
+            Each line on the receipt goes to the person who actually ordered it — fair splits
+            without a calculator.
           </p>
         </motion.div>
 
-        {/* Orbital layout */}
         <div className="relative mx-auto flex h-[420px] max-w-lg items-center justify-center md:h-[500px] md:max-w-2xl">
-          {/* Connection lines SVG */}
           <motion.svg
             style={{ opacity: connectionOpacity }}
             className="absolute inset-0 h-full w-full"
@@ -85,7 +84,6 @@ export function AssignmentFlow() {
             })}
           </motion.svg>
 
-          {/* Center orb - the bill */}
           <motion.div
             style={{ scale: orbScale }}
             className="relative z-10 flex h-28 w-28 flex-col items-center justify-center rounded-full md:h-36 md:w-36"
@@ -93,13 +91,12 @@ export function AssignmentFlow() {
             <div className="absolute inset-0 rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 opacity-80 pulse-glow" />
             <div className="absolute inset-2 rounded-full bg-[#0a0a0b]/80 backdrop-blur-sm" />
             <div className="relative z-10 text-center">
-              <div className="text-[10px] uppercase tracking-wider text-zinc-500">Total Bill</div>
-              <div className="text-xl font-bold text-emerald-400 md:text-2xl">$29.24</div>
+              <div className="text-[10px] uppercase tracking-wider text-zinc-500">Receipt</div>
+              <div className="text-xl font-bold text-emerald-400 md:text-2xl">$38.94</div>
             </div>
             <div className="absolute -inset-4 rounded-full bg-emerald-500/20 blur-xl" />
           </motion.div>
 
-          {/* Orbiting avatars */}
           {friends.map((friend, i) => {
             const rad = ((friend.angle - 90) * Math.PI) / 180;
             const x = Math.cos(rad) * 140;
@@ -134,35 +131,29 @@ export function AssignmentFlow() {
                     {friend.name[0]}
                   </div>
                   <span className="mt-1.5 text-[10px] text-zinc-400">{friend.name}</span>
-                  <span className="text-[10px] font-medium text-emerald-400">$5.85</span>
+                  <span className="text-[9px] text-zinc-500">{friend.item}</span>
+                  <span className="text-[10px] font-medium text-emerald-400">{friend.amount}</span>
                 </motion.div>
               </motion.div>
             );
           })}
         </div>
 
-        {/* Split mode pills */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="mt-8 flex flex-wrap justify-center gap-3"
+          className="mx-auto mt-8 flex max-w-xl flex-wrap justify-center gap-3"
         >
-          {splitModes.map((mode) => (
+          {assignSteps.map((step, i) => (
             <div
-              key={mode.label}
-              className={`relative rounded-full px-5 py-2.5 text-sm font-medium transition-all ${
-                mode.active
-                  ? "bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 glow-emerald"
-                  : "glass text-zinc-400"
-              }`}
+              key={step}
+              className="glass flex items-center gap-2 rounded-full px-4 py-2.5 text-sm text-zinc-300"
             >
-              {mode.label}
-              {mode.badge && (
-                <span className="ml-2 rounded-full bg-zinc-700 px-2 py-0.5 text-[10px] text-zinc-400">
-                  {mode.badge}
-                </span>
-              )}
+              <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500/20 text-xs font-bold text-emerald-400">
+                {i + 1}
+              </span>
+              {step}
             </div>
           ))}
         </motion.div>

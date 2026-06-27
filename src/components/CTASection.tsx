@@ -1,15 +1,95 @@
 "use client";
 
+import { useState, type FormEvent } from "react";
 import { motion } from "framer-motion";
-import { GlowButton } from "./ui/GlowButton";
 import { Sparkles } from "lucide-react";
+import { GlowButton } from "./ui/GlowButton";
+import { MarketingDisclaimer } from "./MarketingDisclaimer";
+import { SafeInput } from "./ui/SafeInput";
+import { SafeLink } from "./ui/SafeLink";
+import { useCsrfToken } from "@/components/CsrfProvider";
+import { SITE_DISCLAIMERS } from "@/lib/disclaimers";
+import { COMING_SOON_COPY } from "@/lib/marketing-content";
+import { CSRF_HEADER_NAME } from "@/lib/csrf/constants";
 
 export function CTASection() {
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [honeypot, setHoneypot] = useState("");
+  const { token, loading: csrfLoading, error: csrfError, refreshToken } = useCsrfToken();
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setError("");
+    setSuccess("");
+
+    if (honeypot.trim()) {
+      return;
+    }
+
+    if (!token) {
+      setError(csrfError ?? "Secure form is still loading. Try again.");
+      return;
+    }
+
+    setSubmitting(true);
+
+    try {
+      let activeToken: string | null = token ?? (await refreshToken());
+
+      if (!activeToken) {
+        setError(csrfError ?? "Secure form is still loading. Try again.");
+        return;
+      }
+
+      const submit = (csrfValue: string) =>
+        fetch("/api/beta-signup", {
+          method: "POST",
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json",
+            [CSRF_HEADER_NAME]: csrfValue,
+          },
+          body: JSON.stringify({
+            email,
+            company: honeypot,
+          }),
+        });
+
+      let response = await submit(activeToken);
+
+      if (response.status === 403) {
+        activeToken = await refreshToken();
+        if (activeToken) {
+          response = await submit(activeToken);
+        }
+      }
+
+      const payload = (await response.json()) as {
+        error?: string;
+        message?: string;
+      };
+
+      if (!response.ok) {
+        setError(payload.error ?? "Unable to submit your request.");
+        return;
+      }
+
+      setSuccess(payload.message ?? "Thanks! We will reach out soon.");
+      setEmail("");
+    } catch {
+      setError("Unable to submit your request. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
   return (
     <section id="cta" className="section-padding relative overflow-hidden">
       <div className="absolute inset-0 bg-[#0a0a0b]" />
 
-      {/* Radial glow */}
       <div className="absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-500/8 blur-[120px]" />
       <div className="noise-overlay absolute inset-0" />
 
@@ -28,23 +108,85 @@ export function CTASection() {
             <Sparkles className="h-8 w-8 text-emerald-400" />
           </motion.div>
 
+          <span className="mb-4 inline-block rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-1.5 text-xs font-medium uppercase tracking-widest text-emerald-400">
+            {COMING_SOON_COPY.badge}
+          </span>
+
           <h2
             className="font-display text-4xl font-bold md:text-6xl glow-emerald-text"
             style={{ fontFamily: "var(--font-syne)" }}
           >
-            Start Splitting{" "}
-            <span className="gradient-text">Smarter</span>
+            Be first when we{" "}
+            <span className="gradient-text">launch</span>
           </h2>
 
           <p className="mt-6 text-lg text-zinc-400">
-            10-user private app. Invite-only. Zero noise.
+            {COMING_SOON_COPY.ctaSubtitle}
           </p>
 
-          <div className="mt-10">
-            <GlowButton href="mailto:hello@fareshare.app?subject=Private%20Beta%20Access" size="lg">
-              Join the Private Beta
-            </GlowButton>
-          </div>
+          <form
+            onSubmit={handleSubmit}
+            className="relative mx-auto mt-10 flex w-full max-w-sm flex-col gap-3"
+            noValidate
+          >
+            <div className="flex flex-col gap-3">
+              <SafeInput
+                id="beta-email"
+                name="email"
+                type="email"
+                inputMode="email"
+                autoComplete="email"
+                required
+                maxInputLength={254}
+                value={email}
+                onValueChange={setEmail}
+                placeholder="you@example.com"
+                disabled={submitting || csrfLoading}
+                aria-invalid={error ? true : undefined}
+                aria-describedby={error ? "beta-email-error" : undefined}
+                className="w-full rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm text-white placeholder:text-zinc-500 focus:border-emerald-400/50 focus:outline-none focus:ring-2 focus:ring-emerald-400/20 disabled:opacity-60"
+              />
+              <div className="w-full [&>button]:block [&>button]:w-full">
+                <GlowButton
+                  type="submit"
+                  size="lg"
+                  className="w-full justify-center"
+                  disabled={submitting || csrfLoading || !token}
+                >
+                  {submitting ? "Submitting..." : COMING_SOON_COPY.waitlistButton}
+                </GlowButton>
+              </div>
+            </div>
+
+            <SafeInput
+              tabIndex={-1}
+              autoComplete="off"
+              name="company"
+              value={honeypot}
+              onValueChange={setHoneypot}
+              aria-hidden="true"
+              className="pointer-events-none absolute h-0 w-0 opacity-0"
+            />
+
+            {error ? (
+              <p id="beta-email-error" className="text-sm text-red-400" role="alert">
+                {error}
+              </p>
+            ) : null}
+
+            {success ? (
+              <p className="text-sm text-emerald-400" role="status">
+                {success}
+              </p>
+            ) : null}
+
+            <MarketingDisclaimer id="beta-disclaimer" className="mt-4 text-left">
+              {SITE_DISCLAIMERS.beta}{" "}
+              <SafeLink href="/privacy">Privacy Policy</SafeLink>
+              {" · "}
+              <SafeLink href="/disclaimers">Disclaimers</SafeLink>
+            </MarketingDisclaimer>
+          </form>
 
           <motion.p
             initial={{ opacity: 0 }}

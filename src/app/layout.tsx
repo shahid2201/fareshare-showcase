@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Syne, DM_Sans } from "next/font/google";
+import { Providers } from "@/components/Providers";
 import "./globals.css";
 
 const syne = Syne({
@@ -27,12 +28,14 @@ export const metadata: Metadata = {
   ],
   icons: {
     icon: "/favicon.svg",
+    apple: "/logo-mark.svg",
   },
   openGraph: {
     title: "FareShare — Split Life's Costs. Effortlessly.",
     description:
       "Scan receipts. Extract items. Assign shares. Settle instantly.",
     type: "website",
+    images: [{ url: "/logo.svg", width: 512, height: 512, alt: "FareShare" }],
   },
 };
 
@@ -43,7 +46,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${syne.variable} ${dmSans.variable} h-full`}>
-      <body className="min-h-full antialiased">{children}</body>
+      <body className="min-h-full antialiased">
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }

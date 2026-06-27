@@ -10,6 +10,7 @@ import {
 } from "framer-motion";
 import { GlowButton } from "./ui/GlowButton";
 import { GlassButton } from "./ui/GlassButton";
+import { COMING_SOON_COPY } from "@/lib/marketing-content";
 
 const itemCards = [
   { name: "Organic Milk", price: "$4.99", angle: -45, dist: 180 },
@@ -80,9 +81,9 @@ export function HeroSection() {
         />
       </motion.div>
 
-      <motion.div style={{ opacity, scale }} className="relative z-10 flex flex-col items-center px-6 pt-24 text-center">
+      <motion.div style={{ opacity, scale }} className="relative z-10 flex flex-col items-center px-6 pt-32 text-center md:pt-36">
         {/* Scan line reveal area */}
-        <div className="relative mb-12 min-h-[280px] w-full max-w-3xl">
+        <div className="relative mb-28 min-h-[320px] w-full max-w-3xl pb-16">
           {/* Scanning laser line */}
           {phase === "scan" && (
             <div className="absolute inset-x-0 top-0 bottom-0 overflow-hidden rounded-2xl">
@@ -151,7 +152,15 @@ export function HeroSection() {
         </div>
 
         {/* Headline with scan reveal */}
-        <div className="relative overflow-hidden">
+        <div className="relative z-10 mt-4 overflow-hidden">
+          <motion.span
+            initial={{ opacity: 0, y: 12 }}
+            animate={headlineVisible ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-emerald-400"
+          >
+            {COMING_SOON_COPY.badge}
+          </motion.span>
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={headlineVisible ? { opacity: 1, y: 0 } : {}}
@@ -171,7 +180,10 @@ export function HeroSection() {
           transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
           className="mt-6 max-w-xl text-lg text-zinc-400 md:text-xl"
         >
-          Scan receipts. Extract items. Assign shares. Settle instantly.
+          Scan receipts. Extract items. Assign shares. Settle up together.
+          <span className="mt-2 block text-base text-zinc-500 md:text-lg">
+            {COMING_SOON_COPY.heroLine}
+          </span>
         </motion.p>
 
         <motion.div
@@ -181,26 +193,9 @@ export function HeroSection() {
           className="mt-10 flex flex-col gap-4 sm:flex-row"
         >
           <GlowButton href="#cta" size="lg">
-            Get Early Access
+            {COMING_SOON_COPY.waitlistButton}
           </GlowButton>
           <GlassButton href="#scan">See How It Works</GlassButton>
-        </motion.div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2 }}
-          className="mt-16 flex flex-col items-center gap-2"
-        >
-          <span className="text-xs text-zinc-600">Scroll to explore</span>
-          <motion.div
-            animate={{ y: [0, 8, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5 }}
-            className="h-8 w-5 rounded-full border border-zinc-700 p-1"
-          >
-            <div className="mx-auto h-2 w-1 rounded-full bg-emerald-400" />
-          </motion.div>
         </motion.div>
       </motion.div>
     </section>

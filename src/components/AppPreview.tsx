@@ -2,23 +2,28 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+
 import {
-  PhoneFrame,
-  DashboardScreen,
-  ItemsScreen,
-  ActivityScreen,
   AccountScreen,
-  ScanFlowScreen,
+  ActivityScreen,
+  FriendsScreen,
+  HomeScreen,
+  ItemsScreen,
+  PhoneFrame,
   ReviewFlowScreen,
+  ScanFlowScreen,
 } from "./AppScreens";
+import { MarketingDisclaimer } from "./MarketingDisclaimer";
+import { SITE_DISCLAIMERS } from "@/lib/disclaimers";
 
 const screens = [
-  { label: "Dashboard", component: DashboardScreen },
-  { label: "Items", component: ItemsScreen },
+  { label: "Home", component: HomeScreen },
+  { label: "My Items", component: ItemsScreen },
   { label: "Activity", component: ActivityScreen },
+  { label: "Friends", component: FriendsScreen },
+  { label: "Scan", component: ScanFlowScreen },
+  { label: "Review", component: ReviewFlowScreen },
   { label: "Account", component: AccountScreen },
-  { label: "Scan Flow", component: ScanFlowScreen },
-  { label: "Review Flow", component: ReviewFlowScreen },
 ];
 
 export function AppPreview() {
@@ -53,12 +58,12 @@ export function AppPreview() {
             <span className="gradient-text">in your hands</span>
           </h2>
           <p className="mt-4 text-zinc-500">
-            Scroll through real screens — every pixel designed for clarity.
+            Stylized previews of the screens you will use every day — from Home to settle-up.
           </p>
         </motion.div>
 
         <motion.div style={{ rotateX: rotate }} className="relative">
-          <div className="flex gap-8 overflow-x-auto pb-8 snap-x snap-mandatory scrollbar-thin px-4 md:px-0 md:justify-center">
+          <div className="flex gap-8 overflow-x-auto pb-8 snap-x snap-mandatory scrollbar-thin px-4 md:px-0">
             {screens.map((screen, i) => (
               <PhoneFrame key={screen.label} label={screen.label} index={i}>
                 <screen.component />
@@ -70,6 +75,10 @@ export function AppPreview() {
         <p className="mt-4 text-center text-xs text-zinc-600 md:hidden">
           ← Swipe to explore →
         </p>
+
+        <MarketingDisclaimer className="mx-auto mt-6 max-w-2xl text-center">
+          {SITE_DISCLAIMERS.previews} {SITE_DISCLAIMERS.sampleData}
+        </MarketingDisclaimer>
       </div>
     </section>
   );

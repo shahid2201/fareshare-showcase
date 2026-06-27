@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { sanitizeHref, isExternalHref } from "@/lib/security";
 import { cn } from "@/lib/utils";
 
 interface GlowButtonProps {
@@ -9,6 +10,8 @@ interface GlowButtonProps {
   onClick?: () => void;
   className?: string;
   size?: "md" | "lg";
+  type?: "button" | "submit" | "reset";
+  disabled?: boolean;
 }
 
 export function GlowButton({
@@ -17,7 +20,11 @@ export function GlowButton({
   onClick,
   className,
   size = "md",
+  type = "button",
+  disabled = false,
 }: GlowButtonProps) {
+  const safeHref = sanitizeHref(href, "#cta");
+  const external = isExternalHref(safeHref);
   const sizes = {
     md: "px-6 py-3 text-sm",
     lg: "px-10 py-4 text-base md:text-lg",
@@ -41,16 +48,26 @@ export function GlowButton({
     </motion.span>
   );
 
-  if (onClick) {
+  if (onClick || type !== "button") {
     return (
-      <button type="button" onClick={onClick} className="inline-block">
+      <button
+        type={type}
+        onClick={onClick}
+        disabled={disabled}
+        className="inline-block disabled:cursor-not-allowed"
+      >
         {inner}
       </button>
     );
   }
 
   return (
-    <a href={href} className="inline-block">
+    <a
+      href={safeHref}
+      className="inline-block"
+      target={external ? "_blank" : undefined}
+      rel={external ? "noopener noreferrer" : undefined}
+    >
       {inner}
     </a>
   );
