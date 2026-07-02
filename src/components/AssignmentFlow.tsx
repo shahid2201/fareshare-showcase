@@ -61,7 +61,7 @@ export function AssignmentFlow() {
         <div className="relative mx-auto flex h-[420px] max-w-lg items-center justify-center md:h-[500px] md:max-w-2xl">
           <motion.svg
             style={{ opacity: connectionOpacity }}
-            className="absolute inset-0 h-full w-full"
+            className="absolute inset-0 z-0 h-full w-full"
             viewBox="0 0 400 400"
           >
             {friends.map((friend, i) => {
@@ -114,7 +114,7 @@ export function AssignmentFlow() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 + i * 0.1, type: "spring" }}
-                className="absolute"
+                className="absolute z-20"
                 style={{
                   left: `calc(50% + ${x}px - 28px)`,
                   top: `calc(50% + ${y}px - 28px)`,
@@ -126,10 +126,9 @@ export function AssignmentFlow() {
                   className="flex flex-col items-center"
                 >
                   <div
-                    className="flex h-14 w-14 items-center justify-center rounded-full border-2 text-sm font-bold shadow-lg md:h-16 md:w-16"
+                    className="relative flex h-14 w-14 items-center justify-center rounded-full border-2 bg-[#0a0a0b] text-sm font-bold md:h-16 md:w-16"
                     style={{
                       borderColor: friend.color,
-                      backgroundColor: `${friend.color}15`,
                       color: friend.color,
                       boxShadow: `0 0 20px ${friend.color}30`,
                     }}
