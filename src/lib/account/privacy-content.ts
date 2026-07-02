@@ -1,22 +1,22 @@
 export const PRIVACY_PILLARS = [
   {
-    title: "Receipts handled with care",
+    title: "Waitlist, not a data grab",
     description:
-      "Images are used to extract your bill, then converted into structured data you control — not kept as a photo library.",
+      "Joining the launch list collects your email and basic anti-abuse signals — not a FareShare account, and not sold to advertisers.",
   },
   {
-    title: "Minimal by design",
+    title: "Demos stay transient",
     description:
-      "We collect what splitting requires — names, amounts, assignments, and payments. No selling your data, no ad profiles.",
+      "If a website scan demo is available, receipt images are processed to show results and are not kept as a photo library.",
   },
   {
-    title: "Transparent intelligence",
+    title: "App privacy is separate",
     description:
-      "Scan quality, confidence hints, and editable results keep you in the loop before anything is shared with friends.",
+      "The mobile app has its own Privacy Policy for accounts, households, receipts, and payments once you sign up in-app.",
   },
 ] as const;
 
 export const PRIVACY_POLICY_QUOTE =
-  "FareShare is designed to avoid collecting precise GPS location, government IDs, biometrics, or raw bank credentials — and to give you clear control over your shared bill data.";
+  "This website policy covers the FareShare marketing site and waitlist only. FareShare is designed to avoid collecting government IDs, biometrics, or raw bank credentials here — and the app gives you separate controls when you create an account.";
 
-export const PRIVACY_POLICY_LAST_UPDATED = "June 27, 2026";
+export const PRIVACY_POLICY_LAST_UPDATED = "July 2, 2026";

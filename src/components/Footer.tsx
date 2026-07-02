@@ -14,6 +14,9 @@ export function Footer() {
           </SafeLink>
 
           <div className="flex flex-wrap justify-center gap-6 text-sm text-zinc-500">
+            <SafeLink href="/terms" className="transition-colors hover:text-emerald-400">
+              Terms of Service
+            </SafeLink>
             <SafeLink href="/privacy" className="transition-colors hover:text-emerald-400">
               Privacy Policy
             </SafeLink>

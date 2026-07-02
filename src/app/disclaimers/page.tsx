@@ -33,11 +33,15 @@ export default function DisclaimersPage() {
         <p className="mt-3 text-sm text-zinc-500">Last updated {DISCLAIMERS_LAST_UPDATED}</p>
         <p className="mt-6 text-sm leading-relaxed text-zinc-400">
           These disclaimers apply to the FareShare marketing website, product previews, and
-          waitlist forms. Use of the mobile app is also governed by in-app terms and our{" "}
+          waitlist forms. They should be read together with our{" "}
+          <SafeLink href="/terms" className="text-emerald-400 hover:text-emerald-300">
+            Terms of Service
+          </SafeLink>{" "}
+          and{" "}
           <SafeLink href="/privacy" className="text-emerald-400 hover:text-emerald-300">
             Privacy Policy
           </SafeLink>
-          .
+          . Use of the mobile app is governed by separate in-app legal terms.
         </p>
 
         <div className="mt-10 space-y-8">
@@ -74,7 +78,7 @@ export default function DisclaimersPage() {
             >
               {SUPPORT_EMAIL}
             </SafeLink>{" "}
-            for clarification about these disclaimers or the Privacy Policy.
+            for clarification about these disclaimers, Terms of Service, or Privacy Policy.
           </p>
         </section>
       </main>

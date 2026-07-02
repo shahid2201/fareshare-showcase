@@ -16,6 +16,7 @@ export const MVP_ACCOUNT_MENU: AccountMenuRow[] = [
   { label: "Profile", href: "/account/profile" },
   { label: "Subscription", href: "/account/subscription" },
   { label: "Help & Support", href: "/account/help" },
+  { label: "Terms of Service", href: "/terms" },
   { label: "Privacy Policy", href: "/privacy" },
   { label: "Sign Out", action: "sign-out" },
 ];

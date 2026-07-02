@@ -89,12 +89,12 @@ export function PrivacyTrust() {
           <p className="text-base leading-relaxed text-zinc-300 md:text-lg">
             {PRIVACY_POLICY_QUOTE}
           </p>
-          <footer className="mt-4 text-sm text-emerald-400/70">
-            <SafeLink
-              href="/privacy"
-              className="transition-colors hover:text-emerald-300"
-            >
-              Read the full Privacy Policy →
+          <footer className="mt-4 flex flex-wrap justify-center gap-x-4 gap-y-1 text-sm text-emerald-400/70">
+            <SafeLink href="/terms" className="transition-colors hover:text-emerald-300">
+              Terms of Service →
+            </SafeLink>
+            <SafeLink href="/privacy" className="transition-colors hover:text-emerald-300">
+              Privacy Policy →
             </SafeLink>
           </footer>
         </motion.blockquote>

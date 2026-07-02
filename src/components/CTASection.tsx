@@ -214,6 +214,8 @@ export function CTASection() {
 
             <MarketingDisclaimer id="beta-disclaimer" className="mt-4 text-left">
               {SITE_DISCLAIMERS.beta}{" "}
+              <SafeLink href="/terms">Terms of Service</SafeLink>
+              {" · "}
               <SafeLink href="/privacy">Privacy Policy</SafeLink>
               {" · "}
               <SafeLink href="/disclaimers">Disclaimers</SafeLink>
