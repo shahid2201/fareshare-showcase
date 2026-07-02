@@ -7,7 +7,7 @@ import { AssignmentFlow } from "@/components/AssignmentFlow";
 import { FeaturesShowcase } from "@/components/FeaturesShowcase";
 import { DashboardSection } from "@/components/DashboardSection";
 import { PrivacyTrust } from "@/components/PrivacyTrust";
-import { PricingSection } from "@/components/PricingSection";
+import { LaunchSection } from "@/components/LaunchSection";
 import { AppPreview } from "@/components/AppPreview";
 import { CTASection } from "@/components/CTASection";
 import { Footer } from "@/components/Footer";
@@ -25,7 +25,7 @@ export default function Home() {
         <FeaturesShowcase />
         <DashboardSection />
         <PrivacyTrust />
-        <PricingSection />
+        <LaunchSection />
         <AppPreview />
         <CTASection />
       </main>

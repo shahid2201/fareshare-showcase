@@ -12,7 +12,7 @@ export const SITE_DISCLAIMERS = {
   ocr:
     "Scan and intelligence features can be incomplete, delayed, inaccurate, or unavailable. You are responsible for reviewing and correcting all extracted items, prices, categories, and totals before sharing or paying.",
   pricing:
-    "Prices are shown in Canadian dollars (CAD) unless stated otherwise. Plans, fees, and coverage rules may change before or after launch. Applicable taxes may be added at checkout. Nothing here limits non-waivable consumer protection rights you may have under Canadian law.",
+    "Subscription pricing and plan details have not been published yet and may change before launch. Nothing on this site constitutes an offer to sell. Waitlist signup does not create a FareShare account or purchase a plan. Applicable taxes may be added when billing is available. Nothing here limits non-waivable consumer protection rights you may have under Canadian law.",
   beta:
     "Waitlist signup does not create a FareShare account or purchase a plan. Launch perks, if offered, are subject to change and will be communicated before release. We may email you about launch updates; see our Privacy Policy for how we handle your information.",
   uploadDemo:
@@ -37,7 +37,7 @@ export const FOOTER_DISCLAIMER_BLOCKS: Array<{ title: string; body: string }> = 
     body: SITE_DISCLAIMERS.ocr,
   },
   {
-    title: "Pricing & availability",
+    title: "Availability",
     body: SITE_DISCLAIMERS.pricing,
   },
   {

@@ -20,8 +20,8 @@ export function Footer() {
             <SafeLink href="/disclaimers" className="transition-colors hover:text-emerald-400">
               Disclaimers
             </SafeLink>
-            <SafeLink href="#pricing" className="transition-colors hover:text-emerald-400">
-              Pricing
+            <SafeLink href="#launch" className="transition-colors hover:text-emerald-400">
+              Launch
             </SafeLink>
             <SafeLink href="#scan" className="transition-colors hover:text-emerald-400">
               How It Works

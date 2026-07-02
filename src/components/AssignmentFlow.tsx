@@ -17,6 +17,10 @@ const assignSteps = [
   "They see it under I Need to Pay",
 ];
 
+const ORBIT_RADIUS = 140;
+const CENTER_ORB_RADIUS = 28;
+const FRIEND_ORB_RADIUS = 28;
+
 export function AssignmentFlow() {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
@@ -62,15 +66,17 @@ export function AssignmentFlow() {
           >
             {friends.map((friend, i) => {
               const rad = ((friend.angle - 90) * Math.PI) / 180;
-              const x = 200 + Math.cos(rad) * 140;
-              const y = 200 + Math.sin(rad) * 140;
+              const x1 = 200 + Math.cos(rad) * CENTER_ORB_RADIUS;
+              const y1 = 200 + Math.sin(rad) * CENTER_ORB_RADIUS;
+              const x2 = 200 + Math.cos(rad) * (ORBIT_RADIUS - FRIEND_ORB_RADIUS);
+              const y2 = 200 + Math.sin(rad) * (ORBIT_RADIUS - FRIEND_ORB_RADIUS);
               return (
                 <motion.line
                   key={friend.name}
-                  x1="200"
-                  y1="200"
-                  x2={x}
-                  y2={y}
+                  x1={x1}
+                  y1={y1}
+                  x2={x2}
+                  y2={y2}
                   stroke="#34d399"
                   strokeWidth="1.5"
                   strokeDasharray="4 4"
@@ -99,8 +105,8 @@ export function AssignmentFlow() {
 
           {friends.map((friend, i) => {
             const rad = ((friend.angle - 90) * Math.PI) / 180;
-            const x = Math.cos(rad) * 140;
-            const y = Math.sin(rad) * 140;
+            const x = Math.cos(rad) * ORBIT_RADIUS;
+            const y = Math.sin(rad) * ORBIT_RADIUS;
             return (
               <motion.div
                 key={friend.name}

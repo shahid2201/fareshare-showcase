@@ -71,55 +71,54 @@ export const DEMO_SCAN_PREVIEW: ShowcaseScanResult = {
   notices: ["1 item needs a quick review before saving."],
 };
 
-export const PRICING_PLANS = [
+export const LAUNCH_PILLARS = [
   {
     id: "household",
-    name: "Household Plan",
-    tagline: "For roommates, couples & families",
-    price: "$6.99",
-    period: " CAD / month",
-    priceNote: "+ $0.99 per extra member (up to 10)",
+    name: "Built for households",
+    tagline: "Roommates, couples & families",
+    description:
+      "Keep shared groceries, household runs, and recurring expenses organized — everyone sees the same receipt.",
     featured: true,
-    badge: "Best for shared living",
+    badge: "Shared living",
     features: [
-      "Unlimited scanning inside your household",
-      "Unlimited splitting with household members",
-      "Shared budgets and reminders",
-      "Optional household cost sharing",
+      "Assign every line to the right person",
+      "Shared reminders when it's time to settle",
+      "Optional cost sharing across your home",
+      "One place for in-household bills",
     ],
   },
   {
-    id: "individual",
-    name: "Individual Plan",
-    tagline: "Split anywhere, anytime",
-    price: "$3.49",
-    period: " CAD / month",
+    id: "flexible",
+    name: "Split anywhere",
+    tagline: "Friends, trips & one-off dinners",
+    description:
+      "Use FareShare when you're out with people outside your household — no awkward math at the table.",
     featured: false,
     features: [
-      "Unlimited scanning with anyone",
-      "Unlimited splits you create or join",
-      "No one-time pass fees while active",
-      "Works with friends outside your household",
+      "Invite anyone to a bill",
+      "Scan once, split per person",
+      "Track what you owe and what's owed",
+      "Clear history for every receipt",
     ],
   },
   {
-    id: "one-time",
-    name: "One-Time Access",
-    tagline: "Pay only when you need it",
-    price: "$0.50",
-    period: " CAD per bill",
+    id: "simple",
+    name: "Pricing, when we're ready",
+    tagline: "Fair splits without surprise fees",
+    description:
+      "We're finalizing subscription options before launch. The goal is simple: clarity for regular and occasional use.",
     featured: false,
     features: [
-      "Create or unlock one bill",
-      "Split with unlimited people on that bill",
-      "View and settle assigned shares",
-      "Expires after the bill is settled",
+      "Plans announced before release",
+      "Options for households and individuals",
+      "No charges on this website",
+      "Waitlist members hear first",
     ],
   },
 ] as const;
 
-export const COVERAGE_FOOTNOTE =
-  "Coverage keeps splits fair. Household plans cover in-household bills; Individual plans cover you everywhere; one-time access covers a single bill.";
+export const LAUNCH_FOOTNOTE =
+  "Subscription details are not public yet. Join the waitlist to get launch updates and early access news — no purchase required today.";
 
 export const COMING_SOON_COPY = {
   badge: "Coming soon",
@@ -130,8 +129,8 @@ export const COMING_SOON_COPY = {
   heroLine: "The smarter way to split bills is on the way.",
   ctaSubtitle:
     "Be first in line when FareShare launches. Waitlist members receive something special at release — we'll share the details closer to launch day.",
-  pricingIntro:
-    "Planned pricing at launch — preview what's ahead while we're putting the finishing touches on the app.",
+  launchIntro:
+    "FareShare is built around fair, per-item splits — whether you live together or only share the occasional bill. Plan details will be shared closer to launch.",
   waitlistButton: "Join the waitlist",
 } as const;
 
@@ -160,9 +159,9 @@ export const FEATURE_HIGHLIGHTS: Array<{
   },
   {
     icon: Users,
-    title: "Household plans",
+    title: "Household sharing",
     description:
-      "Cover roommates and family under one plan — with optional cost sharing when everyone is on the same team.",
+      "Keep roommates and family on the same page — shared receipts, assignments, and optional cost sharing when everyone lives under one roof.",
   },
   {
     icon: CreditCard,

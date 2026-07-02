@@ -160,7 +160,7 @@ export function AccountScreen() {
       <div className="mb-4 flex flex-col items-center">
         <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-500/20 text-sm font-bold text-emerald-400">S</div>
         <div className="text-[10px] font-medium text-zinc-300">Sheikh A.</div>
-        <div className="text-[8px] text-zinc-500">Individual Plan</div>
+        <div className="text-[8px] text-zinc-500">Member</div>
       </div>
       {MVP_ACCOUNT_MENU.map((item) =>
         "action" in item ? (

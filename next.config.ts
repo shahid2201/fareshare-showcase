@@ -4,14 +4,36 @@ import { loadSharedFareShareEnv } from "./src/lib/env/load-shared-env";
 
 loadSharedFareShareEnv();
 
+const cloudflareTurnstile =
+  "https://challenges.cloudflare.com https://*.challenges.cloudflare.com";
+const cloudflareInsights = "https://static.cloudflareinsights.com";
+
 const contentSecurityPolicy = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://challenges.cloudflare.com",
+  [
+    "script-src",
+    "'self'",
+    "'unsafe-inline'",
+    "'unsafe-eval'",
+    cloudflareTurnstile,
+    cloudflareInsights,
+  ].join(" "),
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob:",
+  ["img-src", "'self'", "data:", "blob:", cloudflareTurnstile].join(" "),
   "font-src 'self'",
-  "connect-src 'self' https://*.supabase.co https://challenges.cloudflare.com",
-  "frame-src https://challenges.cloudflare.com",
+  [
+    "connect-src",
+    "'self'",
+    "https://*.supabase.co",
+    cloudflareTurnstile,
+    cloudflareInsights,
+  ].join(" "),
+  [
+    "frame-src",
+    cloudflareTurnstile,
+    "about:blank",
+    "about:srcdoc",
+  ].join(" "),
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "form-action 'self'",
