@@ -14,9 +14,25 @@ type MemoryEntry = {
 
 const memoryStore = new Map<string, MemoryEntry>();
 
+const DEFAULT_DEV_SALT = "fareshare-dev-salt";
+
+function getRateLimitSalt(): string {
+  const salt = process.env.RATE_LIMIT_SALT?.trim();
+  if (salt) {
+    return salt;
+  }
+
+  if (process.env.NODE_ENV === "production") {
+    console.warn(
+      "[rate-limit] RATE_LIMIT_SALT is not set — using a weak default. Set a strong random salt in production.",
+    );
+  }
+
+  return DEFAULT_DEV_SALT;
+}
+
 function hashRateLimitKey(key: string): string {
-  const salt = process.env.RATE_LIMIT_SALT ?? "fareshare-dev-salt";
-  return createHash("sha256").update(`${salt}:${key}`).digest("hex");
+  return createHash("sha256").update(`${getRateLimitSalt()}:${key}`).digest("hex");
 }
 
 function checkMemoryRateLimit(
@@ -109,10 +125,23 @@ export async function checkRateLimit(options: {
   return checkMemoryRateLimit(key, options.limit, options.windowMs);
 }
 
-export function getClientIdentifier(request: Request): string {
+export function getClientIp(request: Request): string {
+  const realIp = request.headers.get("x-real-ip")?.trim();
+  if (realIp) {
+    return realIp;
+  }
+
   const forwardedFor = request.headers.get("x-forwarded-for");
-  const realIp = request.headers.get("x-real-ip");
-  const ip = forwardedFor?.split(",")[0]?.trim() || realIp || "unknown";
+  const firstHop = forwardedFor?.split(",")[0]?.trim();
+  if (firstHop) {
+    return firstHop;
+  }
+
+  return "unknown";
+}
+
+export function getClientIdentifier(request: Request): string {
+  const ip = getClientIp(request);
   const userAgent = request.headers.get("user-agent") ?? "unknown";
   return `${ip}:${userAgent.slice(0, 120)}`;
 }

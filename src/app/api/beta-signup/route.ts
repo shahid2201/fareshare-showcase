@@ -5,10 +5,16 @@ import {
   jsonSuccess,
 } from "@/lib/api-security";
 import { ensureServerEnv } from "@/lib/env/bootstrap";
+import { isTurnstileConfigured } from "@/lib/feature-flags.server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
-import { hashClientIdentifier } from "@/lib/rate-limit";
-import { betaSignupSchema } from "@/lib/validations/beta-signup";
+import { getClientIp, hashClientIdentifier } from "@/lib/rate-limit";
+import { verifyTurnstileToken } from "@/lib/turnstile/server";
+import { isDisposableEmail } from "@/lib/validations/disposable-email";
+import {
+  betaSignupSchema,
+  validateFormTiming,
+} from "@/lib/validations/beta-signup";
 
 export async function POST(request: Request) {
   ensureServerEnv();
@@ -17,8 +23,8 @@ export async function POST(request: Request) {
     request,
     schema: betaSignupSchema,
     rateLimit: {
-      limit: 5,
-      windowMs: 15 * 60 * 1000,
+      limit: 3,
+      windowMs: 60 * 60 * 1000,
     },
   });
 
@@ -26,10 +32,30 @@ export async function POST(request: Request) {
     return security.response;
   }
 
-  const { email, company } = security.data!;
+  const { email, company, formStartedAt, turnstileToken } = security.data!;
 
   if (company) {
     return jsonSuccess({ ok: true });
+  }
+
+  const timingError = validateFormTiming(formStartedAt);
+  if (timingError) {
+    return jsonError(timingError, 400);
+  }
+
+  if (isDisposableEmail(email)) {
+    return jsonError("Please use a personal or work email address.", 400);
+  }
+
+  if (isTurnstileConfigured()) {
+    const verified = await verifyTurnstileToken(
+      turnstileToken ?? "",
+      getClientIp(request),
+    );
+
+    if (!verified) {
+      return jsonError("Verification failed. Please try again.", 403);
+    }
   }
 
   if (!isSupabaseConfigured()) {

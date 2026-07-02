@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import { GlowButton } from "./ui/GlowButton";
 import { MarketingDisclaimer } from "./MarketingDisclaimer";
 import { SafeInput } from "./ui/SafeInput";
 import { SafeLink } from "./ui/SafeLink";
+import { TurnstileWidget, isTurnstileEnabled } from "@/components/TurnstileWidget";
 import { useCsrfToken } from "@/components/CsrfProvider";
 import { SITE_DISCLAIMERS } from "@/lib/disclaimers";
 import { COMING_SOON_COPY } from "@/lib/marketing-content";
@@ -18,7 +19,20 @@ export function CTASection() {
   const [success, setSuccess] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [honeypot, setHoneypot] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const formStartedAtRef = useRef(Date.now());
+  const turnstileRequired = isTurnstileEnabled();
   const { token, loading: csrfLoading, error: csrfError, refreshToken } = useCsrfToken();
+
+  useEffect(() => {
+    formStartedAtRef.current = Date.now();
+  }, []);
+
+  const canSubmit =
+    Boolean(token) &&
+    !csrfLoading &&
+    !submitting &&
+    (!turnstileRequired || Boolean(turnstileToken));
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -31,6 +45,11 @@ export function CTASection() {
 
     if (!token) {
       setError(csrfError ?? "Secure form is still loading. Try again.");
+      return;
+    }
+
+    if (turnstileRequired && !turnstileToken) {
+      setError("Complete the verification check before submitting.");
       return;
     }
 
@@ -55,6 +74,8 @@ export function CTASection() {
           body: JSON.stringify({
             email,
             company: honeypot,
+            formStartedAt: formStartedAtRef.current,
+            turnstileToken,
           }),
         });
 
@@ -74,13 +95,17 @@ export function CTASection() {
 
       if (!response.ok) {
         setError(payload.error ?? "Unable to submit your request.");
+        setTurnstileToken("");
         return;
       }
 
       setSuccess(payload.message ?? "Thanks! We will reach out soon.");
       setEmail("");
+      setTurnstileToken("");
+      formStartedAtRef.current = Date.now();
     } catch {
       setError("Unable to submit your request. Please try again.");
+      setTurnstileToken("");
     } finally {
       setSubmitting(false);
     }
@@ -146,12 +171,19 @@ export function CTASection() {
                 aria-describedby={error ? "beta-email-error" : undefined}
                 className="w-full rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm text-white placeholder:text-zinc-500 focus:border-emerald-400/50 focus:outline-none focus:ring-2 focus:ring-emerald-400/20 disabled:opacity-60"
               />
+              {turnstileRequired ? (
+                <TurnstileWidget
+                  onToken={setTurnstileToken}
+                  onExpire={() => setTurnstileToken("")}
+                  onError={() => setTurnstileToken("")}
+                />
+              ) : null}
               <div className="w-full [&>button]:block [&>button]:w-full">
                 <GlowButton
                   type="submit"
                   size="lg"
                   className="w-full justify-center"
-                  disabled={submitting || csrfLoading || !token}
+                  disabled={!canSubmit}
                 >
                   {submitting ? "Submitting..." : COMING_SOON_COPY.waitlistButton}
                 </GlowButton>

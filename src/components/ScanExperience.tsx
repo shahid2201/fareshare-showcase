@@ -4,10 +4,8 @@ import { useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { CheckCircle2, Scan, Shield, Sparkles } from "lucide-react";
 
-import { SCAN_PIPELINE_STEPS } from "@/lib/marketing-content";
+import { DEMO_SCAN_PREVIEW, SCAN_PIPELINE_STEPS } from "@/lib/marketing-content";
 import { SITE_DISCLAIMERS } from "@/lib/disclaimers";
-import type { ShowcaseScanResult } from "@/lib/showcase-scan/public-types";
-import { ReceiptUploadZone } from "./ReceiptUploadZone";
 import { ReceiptScanReview } from "./ReceiptScanReview";
 import { MarketingDisclaimer } from "./MarketingDisclaimer";
 
@@ -15,7 +13,6 @@ const stepIcons = [Scan, Sparkles, Shield, CheckCircle2];
 
 export function ScanExperience() {
   const ref = useRef<HTMLElement>(null);
-  const [scanResult, setScanResult] = useState<ShowcaseScanResult | null>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
@@ -163,25 +160,17 @@ export function ScanExperience() {
               transition={{ delay: 0.9 }}
               className="mt-8"
             >
-              <p className="mb-3 text-xs font-medium uppercase tracking-widest text-zinc-500">
-                Try a live scan
-              </p>
-              <ReceiptUploadZone
-                onScanComplete={setScanResult}
-                onScanReset={() => setScanResult(null)}
-              />
-              {scanResult ? (
-                <motion.div
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4 }}
-                  className="mt-6"
-                >
-                  <ReceiptScanReview result={scanResult} />
-                </motion.div>
-              ) : null}
+              <div className="mb-3 flex flex-wrap items-center gap-2">
+                <p className="text-xs font-medium uppercase tracking-widest text-zinc-500">
+                  Sample scan result
+                </p>
+                <span className="rounded-full border border-zinc-700 bg-zinc-800/80 px-2.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-zinc-400">
+                  Preview only
+                </span>
+              </div>
+              <ReceiptScanReview result={DEMO_SCAN_PREVIEW} />
               <MarketingDisclaimer className="mt-3">
-                {SITE_DISCLAIMERS.uploadDemo} {SITE_DISCLAIMERS.ocr}
+                {SITE_DISCLAIMERS.scanPreview} {SITE_DISCLAIMERS.ocr}
               </MarketingDisclaimer>
             </motion.div>
           </div>

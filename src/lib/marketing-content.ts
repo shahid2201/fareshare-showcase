@@ -10,6 +10,8 @@ import {
   Users,
 } from "lucide-react";
 
+import type { ShowcaseScanResult } from "@/lib/showcase-scan/public-types";
+
 export const SCAN_PIPELINE_STEPS = [
   {
     label: "Smart capture reads every line on your receipt",
@@ -28,6 +30,46 @@ export const SCAN_PIPELINE_STEPS = [
     tone: "from-amber-500/20 to-amber-600/10",
   },
 ] as const;
+
+/** Static sample used in the scan section preview (no live upload). */
+export const DEMO_SCAN_PREVIEW: ShowcaseScanResult = {
+  merchant: "Trader Joe's",
+  date: "June 12, 2026",
+  total: 15.47,
+  summary: {
+    item_count: 3,
+    items_to_review: 1,
+    overall_review_status: "mixed",
+    confidence_label: "Medium",
+  },
+  items: [
+    {
+      id: "demo-pasta",
+      name: "Organic Pasta",
+      category: "Groceries",
+      price_after_tax: 2.99,
+      review_status: "ready",
+      confidence_label: "High",
+    },
+    {
+      id: "demo-sauce",
+      name: "Marinara Sauce",
+      category: "Groceries",
+      price_after_tax: 3.49,
+      review_status: "ready",
+      confidence_label: "High",
+    },
+    {
+      id: "demo-wine",
+      name: "Red Wine",
+      category: "Beverages",
+      price_after_tax: 8.99,
+      review_status: "review",
+      confidence_label: "Medium",
+    },
+  ],
+  notices: ["1 item needs a quick review before saving."],
+};
 
 export const PRICING_PLANS = [
   {

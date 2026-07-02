@@ -17,6 +17,8 @@ export const SITE_DISCLAIMERS = {
     "Waitlist signup does not create a FareShare account or purchase a plan. Launch perks, if offered, are subject to change and will be communicated before release. We may email you about launch updates; see our Privacy Policy for how we handle your information.",
   uploadDemo:
     "The live scan on this page shows extracted line items for review. It does not save receipts, create splits, assign items, or charge your account.",
+  scanPreview:
+    "This is a sample scan for illustration. Live receipt upload is not available on the website — scanning will be in the FareShare app at launch.",
   previews:
     "Phone previews are illustrative mockups for design communication. Layout, copy, and features may change in production builds.",
   sampleData:

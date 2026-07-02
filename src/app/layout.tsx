@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     description:
       "Scan receipts. Extract items. Assign shares. Settle instantly.",
     type: "website",
-    images: [{ url: "/logo.svg", width: 512, height: 512, alt: "FareShare" }],
+    images: [{ url: "/logo.svg", width: 240, height: 240, alt: "FareShare" }],
   },
 };
 
