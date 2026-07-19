@@ -35,9 +35,17 @@ export default function OpenGraphImage() {
           FareShare
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 18,
+          }}
+        >
           <div
             style={{
+              display: "flex",
+              flexDirection: "column",
               fontSize: 72,
               fontWeight: 800,
               lineHeight: 1.05,
@@ -45,12 +53,12 @@ export default function OpenGraphImage() {
               maxWidth: 900,
             }}
           >
-            Split life&apos;s costs.
-            <br />
-            Effortlessly.
+            <div style={{ display: "flex" }}>Split life&apos;s costs.</div>
+            <div style={{ display: "flex" }}>Effortlessly.</div>
           </div>
           <div
             style={{
+              display: "flex",
               fontSize: 28,
               lineHeight: 1.35,
               color: "#a1a1aa",
@@ -70,8 +78,8 @@ export default function OpenGraphImage() {
             color: "#71717a",
           }}
         >
-          <span>Bill splitting for households &amp; shared expenses</span>
-          <span style={{ color: "#6ee7b7" }}>fareshare.app</span>
+          <div style={{ display: "flex" }}>Bill splitting for households &amp; shared expenses</div>
+          <div style={{ display: "flex", color: "#6ee7b7" }}>fareshare.app</div>
         </div>
       </div>
     ),
