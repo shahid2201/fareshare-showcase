@@ -14,7 +14,7 @@ export const SITE_DISCLAIMERS = {
   pricing:
     "Subscription pricing and plan details have not been published yet and may change before launch. Nothing on this site constitutes an offer to sell. Waitlist signup does not create a FareShare account or purchase a plan. Applicable taxes may be added when billing is available. Nothing here limits non-waivable consumer protection rights you may have under Canadian law.",
   beta:
-    "Waitlist signup does not create a FareShare account or purchase a plan. Launch perks, if offered, are subject to change and will be communicated before release. We may email you about launch updates; see our Terms of Service and Privacy Policy for how we handle your information.",
+    "Waitlist signup does not create a FareShare account or purchase a plan. We send a confirmation email to verify your address before adding you to launch updates. Launch perks, if offered, are subject to change and will be communicated before release. See our Terms of Service and Privacy Policy for how we handle your information.",
   uploadDemo:
     "The live scan on this page shows extracted line items for review. It does not save receipts, create splits, assign items, or charge your account.",
   scanPreview:

@@ -1,0 +1,35 @@
+{
+  "name": "FareShare",
+  "url": "https://fareshare.app",
+  "tagline": "Split life's costs. Effortlessly.",
+  "definition": "FareShare is a bill-splitting app that scans receipts, extracts line items, lets people assign shares, and tracks settlement — built for households, roommates, couples, and shared expenses.",
+  "category": ["bill splitting", "receipt scanning", "household expense sharing"],
+  "status": "pre-launch",
+  "coreFlow": ["scan", "review", "assign", "settle"],
+  "audiences": ["roommates", "couples", "families", "friends", "group trips"],
+  "not": [
+    "bank",
+    "credit union",
+    "money services business",
+    "financial adviser",
+    "payment card issuer"
+  ],
+  "waitlist": {
+    "createsAccount": false,
+    "purchaseRequired": false,
+    "url": "https://fareshare.app/#cta"
+  },
+  "contact": {
+    "supportEmail": "support@fareshare.app"
+  },
+  "pages": {
+    "home": "https://fareshare.app/",
+    "howItWorks": "https://fareshare.app/how-it-works",
+    "about": "https://fareshare.app/about",
+    "faq": "https://fareshare.app/faq",
+    "terms": "https://fareshare.app/terms",
+    "privacy": "https://fareshare.app/privacy",
+    "disclaimers": "https://fareshare.app/disclaimers",
+    "llmsTxt": "https://fareshare.app/llms.txt"
+  }
+}

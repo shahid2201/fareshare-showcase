@@ -99,7 +99,7 @@ export function CTASection() {
         return;
       }
 
-      setSuccess(payload.message ?? "Thanks! We will reach out soon.");
+      setSuccess(payload.message ?? "Check your email to confirm your spot on the waitlist.");
       setEmail("");
       setTurnstileToken("");
       formStartedAtRef.current = Date.now();

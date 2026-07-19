@@ -14,3 +14,7 @@ export function isTurnstileConfigured(): boolean {
       process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY?.trim(),
   );
 }
+
+export function isTurnstileRequired(): boolean {
+  return process.env.NODE_ENV === "production" || isTurnstileConfigured();
+}

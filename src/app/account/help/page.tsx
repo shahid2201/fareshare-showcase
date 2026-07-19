@@ -6,6 +6,7 @@ import { buildMailtoHref } from "@/lib/security";
 
 export const metadata: Metadata = {
   title: "Help & Support — FareShare",
+  robots: { index: false, follow: false },
 };
 
 export default function AccountHelpPage() {

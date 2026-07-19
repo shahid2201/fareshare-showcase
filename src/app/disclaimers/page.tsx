@@ -1,5 +1,3 @@
-import type { Metadata } from "next";
-
 import { BackToFareShare } from "@/components/BackToFareShare";
 import { SafeLink } from "@/components/ui/SafeLink";
 import {
@@ -8,12 +6,14 @@ import {
   SITE_DISCLAIMERS,
 } from "@/lib/disclaimers";
 import { SUPPORT_EMAIL } from "@/lib/account/constants";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 
-export const metadata: Metadata = {
-  title: "Disclaimers — FareShare",
+export const metadata = buildPageMetadata({
+  title: "Disclaimers",
   description:
     "Important disclaimers for FareShare marketing materials, pricing, scanning, payments, and private beta access.",
-};
+  path: "/disclaimers",
+});
 
 export default function DisclaimersPage() {
   return (

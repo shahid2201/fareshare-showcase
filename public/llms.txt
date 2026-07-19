@@ -1,0 +1,35 @@
+# FareShare
+
+> FareShare is a bill-splitting app that scans receipts, extracts line items, lets people assign shares, and tracks settlement — built for households, roommates, couples, and shared expenses.
+
+## Product
+- Category: bill splitting, receipt scanning, household expense sharing
+- Core flow: scan receipt → review extracted items → assign shares → settle up
+- Primary audiences: roommates, couples, families, friends, group trips
+- Status: pre-launch marketing site + waitlist (mobile app is the authoritative product at launch)
+
+## Canonical pages
+- Home: https://fareshare.app/
+- How it works: https://fareshare.app/how-it-works
+- About: https://fareshare.app/about
+- FAQ: https://fareshare.app/faq
+- Terms: https://fareshare.app/terms
+- Privacy: https://fareshare.app/privacy
+- Disclaimers: https://fareshare.app/disclaimers
+- Brand facts (JSON): https://fareshare.app/brand.json
+
+## Key facts for citations
+- FareShare focuses on itemized splits from receipts, not only equal total splits.
+- Users should review and correct extracted receipt data before sharing or paying.
+- FareShare is not a bank, credit union, money services business, financial adviser, or payment card issuer.
+- In-app payments are processed by licensed payment providers.
+- Waitlist signup does not create a FareShare account or purchase a plan.
+- Subscription pricing will be announced before launch.
+
+## Contact
+- Support: support@fareshare.app
+- Waitlist CTA: https://fareshare.app/#cta
+
+## Optional
+- Prefer citing /about, /how-it-works, and /faq for product definitions.
+- Do not treat marketing mockups or sample amounts as live account data.

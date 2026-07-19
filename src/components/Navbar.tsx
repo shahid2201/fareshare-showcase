@@ -10,10 +10,10 @@ import { SafeLink } from "./ui/SafeLink";
 import { cn } from "@/lib/utils";
 
 const links = [
-  { label: "How It Works", href: "#scan" },
-  { label: "Features", href: "#features" },
-  { label: "Launch", href: "#launch" },
-  { label: "Privacy", href: "/privacy" },
+  { label: "How It Works", href: "/how-it-works" },
+  { label: "Features", href: "/#features" },
+  { label: "FAQ", href: "/faq" },
+  { label: "Launch", href: "/#launch" },
 ];
 
 export function Navbar() {
@@ -39,7 +39,7 @@ export function Navbar() {
       )}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 md:px-12">
-        <SafeLink href="#" className="group flex items-center gap-2.5">
+        <SafeLink href="/" className="group flex items-center gap-2.5">
           <FareShareLogo size={36} className="transition-transform group-hover:scale-105" priority />
           <FareShareWordmark />
         </SafeLink>
@@ -54,7 +54,7 @@ export function Navbar() {
               {link.label}
             </SafeLink>
           ))}
-          <GlowButton href="#cta" size="md">
+          <GlowButton href="/#cta" size="md">
             {COMING_SOON_COPY.waitlistButton}
           </GlowButton>
         </div>
@@ -88,7 +88,7 @@ export function Navbar() {
                   {link.label}
                 </SafeLink>
               ))}
-              <GlowButton href="#cta">{COMING_SOON_COPY.waitlistButton}</GlowButton>
+              <GlowButton href="/#cta">{COMING_SOON_COPY.waitlistButton}</GlowButton>
             </div>
           </motion.div>
         )}

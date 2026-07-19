@@ -192,10 +192,10 @@ export function HeroSection() {
           transition={{ duration: 1, delay: 0.7, ease: "easeOut" }}
           className="mt-10 flex flex-col gap-4 sm:flex-row"
         >
-          <GlowButton href="#cta" size="lg">
+          <GlowButton href="/#cta" size="lg">
             {COMING_SOON_COPY.waitlistButton}
           </GlowButton>
-          <GlassButton href="#scan">See How It Works</GlassButton>
+          <GlassButton href="/how-it-works">See How It Works</GlassButton>
         </motion.div>
       </motion.div>
     </section>

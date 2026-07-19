@@ -14,20 +14,26 @@ export function Footer() {
           </SafeLink>
 
           <div className="flex flex-wrap justify-center gap-6 text-sm text-zinc-500">
+            <SafeLink href="/how-it-works" className="transition-colors hover:text-emerald-400">
+              How It Works
+            </SafeLink>
+            <SafeLink href="/about" className="transition-colors hover:text-emerald-400">
+              About
+            </SafeLink>
+            <SafeLink href="/faq" className="transition-colors hover:text-emerald-400">
+              FAQ
+            </SafeLink>
+            <SafeLink href="/#launch" className="transition-colors hover:text-emerald-400">
+              Launch
+            </SafeLink>
             <SafeLink href="/terms" className="transition-colors hover:text-emerald-400">
-              Terms of Service
+              Terms
             </SafeLink>
             <SafeLink href="/privacy" className="transition-colors hover:text-emerald-400">
-              Privacy Policy
+              Privacy
             </SafeLink>
             <SafeLink href="/disclaimers" className="transition-colors hover:text-emerald-400">
               Disclaimers
-            </SafeLink>
-            <SafeLink href="#launch" className="transition-colors hover:text-emerald-400">
-              Launch
-            </SafeLink>
-            <SafeLink href="#scan" className="transition-colors hover:text-emerald-400">
-              How It Works
             </SafeLink>
             <SafeLink href={`mailto:${SUPPORT_EMAIL}`} className="transition-colors hover:text-emerald-400">
               Contact

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Syne, DM_Sans } from "next/font/google";
 import { Providers } from "@/components/Providers";
+import { buildRootMetadata } from "@/lib/seo/metadata";
 import "./globals.css";
 
 const syne = Syne({
@@ -15,29 +16,7 @@ const dmSans = DM_Sans({
   weight: ["400", "500", "600", "700"],
 });
 
-export const metadata: Metadata = {
-  title: "FareShare — Split Life's Costs. Effortlessly.",
-  description:
-    "Scan receipts. Extract items. Assign shares. Settle instantly. FareShare makes splitting bills feel like clarity, not math.",
-  keywords: [
-    "bill splitting",
-    "receipt scanner",
-    "expense sharing",
-    "roommate expenses",
-    "FareShare",
-  ],
-  icons: {
-    icon: "/favicon.svg",
-    apple: "/logo-mark.svg",
-  },
-  openGraph: {
-    title: "FareShare — Split Life's Costs. Effortlessly.",
-    description:
-      "Scan receipts. Extract items. Assign shares. Settle instantly.",
-    type: "website",
-    images: [{ url: "/logo.svg", width: 240, height: 240, alt: "FareShare" }],
-  },
-};
+export const metadata: Metadata = buildRootMetadata();
 
 export default function RootLayout({
   children,

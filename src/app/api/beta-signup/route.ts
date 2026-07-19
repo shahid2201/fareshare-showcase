@@ -1,15 +1,22 @@
 import { createHash } from "crypto";
+
 import {
   enforceSecureRoute,
   jsonError,
   jsonSuccess,
 } from "@/lib/api-security";
 import { ensureServerEnv } from "@/lib/env/bootstrap";
-import { isTurnstileConfigured } from "@/lib/feature-flags.server";
+import { getWaitlistProductionCheck } from "@/lib/env/production-checks";
+import { isTurnstileConfigured, isTurnstileRequired } from "@/lib/feature-flags.server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { getClientIp, hashClientIdentifier } from "@/lib/rate-limit";
 import { verifyTurnstileToken } from "@/lib/turnstile/server";
+import { isWaitlistEmailConfigured } from "@/lib/waitlist/config";
+import {
+  registerWaitlistSignup,
+  waitlistSignupMessage,
+} from "@/lib/waitlist/service";
 import { isDisposableEmail } from "@/lib/validations/disposable-email";
 import {
   betaSignupSchema,
@@ -18,6 +25,11 @@ import {
 
 export async function POST(request: Request) {
   ensureServerEnv();
+
+  const productionCheck = getWaitlistProductionCheck();
+  if (!productionCheck.ok) {
+    return jsonError("Waitlist signup is temporarily unavailable.", 503);
+  }
 
   const security = await enforceSecureRoute({
     request,
@@ -47,7 +59,11 @@ export async function POST(request: Request) {
     return jsonError("Please use a personal or work email address.", 400);
   }
 
-  if (isTurnstileConfigured()) {
+  if (isTurnstileRequired()) {
+    if (!isTurnstileConfigured()) {
+      return jsonError("Waitlist signup is temporarily unavailable.", 503);
+    }
+
     const verified = await verifyTurnstileToken(
       turnstileToken ?? "",
       getClientIp(request),
@@ -59,12 +75,16 @@ export async function POST(request: Request) {
   }
 
   if (!isSupabaseConfigured()) {
-    return jsonError("Beta signup is temporarily unavailable.", 503);
+    return jsonError("Waitlist signup is temporarily unavailable.", 503);
+  }
+
+  if (!isWaitlistEmailConfigured() && process.env.NODE_ENV === "production") {
+    return jsonError("Waitlist signup is temporarily unavailable.", 503);
   }
 
   const supabase = createAdminClient();
   if (!supabase) {
-    return jsonError("Beta signup is temporarily unavailable.", 503);
+    return jsonError("Waitlist signup is temporarily unavailable.", 503);
   }
 
   const ipHash = createHash("sha256")
@@ -72,25 +92,19 @@ export async function POST(request: Request) {
     .digest("hex");
   const userAgent = request.headers.get("user-agent")?.slice(0, 512) ?? null;
 
-  const { error } = await supabase.from("beta_signups").insert({
-    email,
-    ip_hash: ipHash,
-    user_agent: userAgent,
-  });
+  try {
+    const result = await registerWaitlistSignup(supabase, {
+      email,
+      ipHash,
+      userAgent,
+    });
 
-  if (error) {
-    if (error.code === "23505") {
-      return jsonSuccess({
-        ok: true,
-        message: "You are already on the beta list.",
-      });
-    }
-
-    return jsonError("Unable to save your signup right now.", 500);
+    return jsonSuccess({
+      ok: true,
+      message: waitlistSignupMessage(result),
+    });
+  } catch (error) {
+    console.error("[waitlist] signup failed:", error);
+    return jsonError("Unable to complete your waitlist signup right now.", 500);
   }
-
-  return jsonSuccess({
-    ok: true,
-    message: "Thanks! We will reach out when a beta spot opens.",
-  });
 }

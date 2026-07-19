@@ -33,7 +33,7 @@ export const showcaseLegalDocuments: Record<ShowcaseLegalSlug, ShowcaseLegalDocu
       {
         title: "1. Agreement and Scope",
         body: [
-          'These Terms of Service (the "Terms") are a binding agreement between you and Derhid Group Inc. ("Derhid," "we," "us," or "our") governing your access to and use of the FareShare marketing and showcase website at https://fareshare.app, including waitlist forms, product previews, informational pages, and any optional website demonstrations (collectively, the "Website").',
+          'These Terms of Service (the "Terms") are a binding agreement between you and Derhid Inc. ("Derhid," "we," "us," or "our") governing your access to and use of the FareShare marketing and showcase website at https://fareshare.app, including waitlist forms, product previews, informational pages, and any optional website demonstrations (collectively, the "Website").',
           "BY ACCESSING OR USING THE WEBSITE, SUBMITTING A WAITLIST FORM, OR INTERACTING WITH WEBSITE FEATURES, YOU AGREE TO THESE TERMS AND OUR WEBSITE PRIVACY POLICY. If you do not agree, do not use the Website.",
           "These Terms do not govern the FareShare mobile application for Android or iOS. App use is subject to separate in-app legal terms presented at account creation or within the app.",
         ],
@@ -138,8 +138,8 @@ export const showcaseLegalDocuments: Record<ShowcaseLegalSlug, ShowcaseLegalDocu
       {
         title: "14. Contact",
         body: [
-          "Derhid Group Inc.",
-          "[OFFICIAL BUSINESS ADDRESS — TO BE INSERTED]",
+          "Derhid Inc.",
+          "570 Stonecliffe Rd Oakville ON L6L 4N9",
           "Website: https://fareshare.app",
           "Email: support@fareshare.app",
         ],
@@ -152,14 +152,14 @@ export const showcaseLegalDocuments: Record<ShowcaseLegalSlug, ShowcaseLegalDocu
     effectiveDate: SHOWCASE_LEGAL_LAST_UPDATED,
     policyVersion: SHOWCASE_LEGAL_VERSION,
     summary:
-      "How Derhid Group Inc. handles personal information collected through the FareShare marketing website, waitlist, and optional demonstrations at https://fareshare.app.",
+      "How Derhid Inc. handles personal information collected through the FareShare marketing website, waitlist, and optional demonstrations at https://fareshare.app.",
     scopeNote:
       "This Policy covers the FareShare showcase website only. The FareShare mobile app has a separate Privacy Policy governing account, receipt, household, and payment data.",
     sections: [
       {
         title: "1. Introduction",
         body: [
-          'Derhid Group Inc. ("Derhid," "we," "us," or "our") operates the FareShare marketing website at https://fareshare.app (the "Website").',
+          'Derhid Inc. ("Derhid," "we," "us," or "our") operates the FareShare marketing website at https://fareshare.app (the "Website").',
           "This Privacy Policy explains how we collect, use, disclose, retain, and protect personal information when you visit the Website, join the waitlist, or use optional website features.",
           "We handle personal information in accordance with Canada's Personal Information Protection and Electronic Documents Act (PIPEDA) and, where applicable, substantially similar provincial privacy laws. Marketing emails comply with Canada's Anti-Spam Legislation (CASL).",
           "By using the Website, you acknowledge this Policy. If you do not agree, do not use the Website.",
@@ -169,7 +169,7 @@ export const showcaseLegalDocuments: Record<ShowcaseLegalSlug, ShowcaseLegalDocu
         title: "2. Accountability and Contact",
         body: [
           "Derhid is accountable for personal information collected through the Website.",
-          "Privacy Contact: Derhid Group Inc., [OFFICIAL BUSINESS ADDRESS — TO BE INSERTED], Email: support@fareshare.app, Website: https://fareshare.app.",
+          "Privacy Contact: Derhid Inc., 570 Stonecliffe Rd Oakville ON L6L 4N9, Email: support@fareshare.app, Website: https://fareshare.app.",
         ],
       },
       {
@@ -295,8 +295,8 @@ export const showcaseLegalDocuments: Record<ShowcaseLegalSlug, ShowcaseLegalDocu
       {
         title: "17. Contact",
         body: [
-          "Derhid Group Inc.",
-          "[OFFICIAL BUSINESS ADDRESS — TO BE INSERTED]",
+          "Derhid Inc.",
+          "570 Stonecliffe Rd Oakville ON L6L 4N9",
           "Website: https://fareshare.app",
           "Privacy Email: support@fareshare.app",
         ],
