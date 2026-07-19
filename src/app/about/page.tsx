@@ -13,7 +13,8 @@ import { buildPageMetadata } from "@/lib/seo/metadata";
 
 export const metadata = buildPageMetadata({
   title: "About",
-  description: ABOUT_BOILERPLATE,
+  description:
+    "FareShare is a bill-splitting app for scanning receipts, assigning shares, and settling household expenses. Learn who it’s for and our launch status.",
   path: "/about",
   keywords: [
     "FareShare",
@@ -42,8 +43,11 @@ export default function AboutPage() {
         description={ABOUT_BOILERPLATE}
         relatedLinks={[
           { href: "/how-it-works", label: "How it works" },
+          { href: "/for/roommates", label: "For roommates" },
+          { href: "/vs/splitwise", label: "vs Splitwise" },
+          { href: "/press", label: "Press kit" },
+          { href: "/security-privacy", label: "Security & privacy" },
           { href: "/faq", label: "FAQ" },
-          { href: "/disclaimers", label: "Disclaimers" },
         ]}
       >
         <blockquote className="rounded-2xl border border-emerald-500/15 bg-emerald-500/[0.04] p-6 text-sm leading-relaxed text-zinc-300 md:text-base">

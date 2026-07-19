@@ -24,7 +24,6 @@ export function buildOrganizationJsonLd(): JsonLd {
     description: BRAND_DEFINITION,
     email: SUPPORT_EMAIL,
     slogan: BRAND_TAGLINE,
-    sameAs: [] as string[],
   };
 }
 
@@ -53,15 +52,6 @@ export function buildSoftwareApplicationJsonLd(): JsonLd {
     operatingSystem: "iOS, Android",
     description: BRAND_DEFINITION,
     url: getSiteUrl(),
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "CAD",
-      description:
-        "Join the waitlist for launch updates. Subscription pricing will be announced before release. Waitlist signup does not create an account or purchase a plan.",
-      availability: "https://schema.org/PreOrder",
-      url: absoluteUrl("/#cta"),
-    },
     featureList: [
       "Receipt scanning",
       "Line-item extraction",
@@ -69,6 +59,29 @@ export function buildSoftwareApplicationJsonLd(): JsonLd {
       "Household expense sharing",
       "Settlement tracking",
     ],
+  };
+}
+
+export function buildGuideHowToJsonLd(
+  howTo: {
+    name: string;
+    description: string;
+    steps: Array<{ name: string; text: string }>;
+  },
+  path: string,
+): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: howTo.name,
+    description: howTo.description,
+    url: absoluteUrl(path),
+    step: howTo.steps.map((step, index) => ({
+      "@type": "HowToStep",
+      position: index + 1,
+      name: step.name,
+      text: step.text,
+    })),
   };
 }
 

@@ -14,27 +14,27 @@ export default function robots(): MetadataRoute.Robots {
       },
       {
         userAgent: "GPTBot",
-        allow: ["/", "/about", "/how-it-works", "/faq", "/terms", "/privacy", "/disclaimers"],
+        allow: "/",
         disallow: ["/account/", "/waitlist/", "/api/"],
       },
       {
         userAgent: "ChatGPT-User",
-        allow: ["/", "/about", "/how-it-works", "/faq", "/terms", "/privacy", "/disclaimers"],
+        allow: "/",
         disallow: ["/account/", "/waitlist/", "/api/"],
       },
       {
         userAgent: "PerplexityBot",
-        allow: ["/", "/about", "/how-it-works", "/faq", "/terms", "/privacy", "/disclaimers"],
+        allow: "/",
         disallow: ["/account/", "/waitlist/", "/api/"],
       },
       {
         userAgent: "ClaudeBot",
-        allow: ["/", "/about", "/how-it-works", "/faq", "/terms", "/privacy", "/disclaimers"],
+        allow: "/",
         disallow: ["/account/", "/waitlist/", "/api/"],
       },
       {
         userAgent: "Google-Extended",
-        allow: ["/", "/about", "/how-it-works", "/faq", "/terms", "/privacy", "/disclaimers"],
+        allow: "/",
         disallow: ["/account/", "/waitlist/", "/api/"],
       },
     ],

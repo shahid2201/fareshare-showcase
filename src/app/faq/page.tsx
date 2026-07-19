@@ -6,11 +6,10 @@ import {
   buildFaqPageJsonLd,
 } from "@/lib/seo/json-ld";
 import { buildPageMetadata } from "@/lib/seo/metadata";
-import { BRAND_DEFINITION } from "@/lib/seo/site";
-
 export const metadata = buildPageMetadata({
   title: "FAQ",
-  description: `Answers about FareShare: ${BRAND_DEFINITION}`,
+  description:
+    "FAQ about FareShare: receipt scanning, itemized splits, roommates, waitlist signup, and how we differ from balance-only apps.",
   path: "/faq",
   keywords: [
     "FareShare FAQ",
@@ -39,9 +38,10 @@ export default function FaqPage() {
         description="Straight answers about what FareShare is, how itemized splits work, waitlist signup, and what we are — and are not."
         relatedLinks={[
           { href: "/how-it-works", label: "How it works" },
-          { href: "/about", label: "About" },
-          { href: "/privacy", label: "Privacy Policy" },
-          { href: "/terms", label: "Terms of Service" },
+          { href: "/vs/splitwise", label: "vs Splitwise" },
+          { href: "/for/roommates", label: "For roommates" },
+          { href: "/guides/roommate-expense-system", label: "Roommate expense system" },
+          { href: "/security-privacy", label: "Security & privacy" },
         ]}
       >
         <div className="space-y-4">

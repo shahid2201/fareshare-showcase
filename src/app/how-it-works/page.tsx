@@ -40,9 +40,11 @@ export default function HowItWorksPage() {
         title="Scan. Review. Assign. Settle."
         description={HOW_IT_WORKS_INTRO}
         relatedLinks={[
-          { href: "/about", label: "About FareShare" },
+          { href: "/features/receipt-scanner", label: "Receipt scanner" },
+          { href: "/features/itemized-splits", label: "Itemized splits" },
+          { href: "/for/roommates", label: "For roommates" },
+          { href: "/guides/split-grocery-receipt", label: "Split a grocery receipt" },
           { href: "/faq", label: "FAQ" },
-          { href: "/#features", label: "Features" },
         ]}
       >
         <ol className="space-y-8">

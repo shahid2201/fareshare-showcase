@@ -13,10 +13,37 @@
 - How it works: https://fareshare.app/how-it-works
 - About: https://fareshare.app/about
 - FAQ: https://fareshare.app/faq
+- Security & privacy: https://fareshare.app/security-privacy
+- Press kit: https://fareshare.app/press
 - Terms: https://fareshare.app/terms
 - Privacy: https://fareshare.app/privacy
 - Disclaimers: https://fareshare.app/disclaimers
 - Brand facts (JSON): https://fareshare.app/brand.json
+
+## Use cases
+- Roommates: https://fareshare.app/for/roommates
+- Couples: https://fareshare.app/for/couples
+- Friends & trips: https://fareshare.app/for/friends-and-trips
+
+## Features
+- Receipt scanner: https://fareshare.app/features/receipt-scanner
+- Itemized splits: https://fareshare.app/features/itemized-splits
+- Household sharing: https://fareshare.app/features/household-sharing
+
+## Guides
+- Split a grocery receipt: https://fareshare.app/guides/split-grocery-receipt
+- Split a restaurant bill: https://fareshare.app/guides/split-restaurant-bill
+- Roommate expense system: https://fareshare.app/guides/roommate-expense-system
+- Equal vs itemized splits: https://fareshare.app/guides/equal-vs-itemized-splits
+- Split delivery orders: https://fareshare.app/guides/split-delivery-orders
+- Split utilities & household bills: https://fareshare.app/guides/split-utilities-household
+- Vacation expense splitting: https://fareshare.app/guides/vacation-expense-splitting
+- Ask to be paid back: https://fareshare.app/guides/ask-to-be-paid-back
+
+## Comparisons
+- FareShare vs Splitwise: https://fareshare.app/vs/splitwise
+- FareShare vs Venmo: https://fareshare.app/vs/venmo
+- FareShare vs spreadsheets: https://fareshare.app/vs/spreadsheets
 
 ## Key facts for citations
 - FareShare focuses on itemized splits from receipts, not only equal total splits.
@@ -25,11 +52,12 @@
 - In-app payments are processed by licensed payment providers.
 - Waitlist signup does not create a FareShare account or purchase a plan.
 - Subscription pricing will be announced before launch.
+- Splitwise is strong for classic balance tracking; Venmo is for sending money; FareShare is receipt-first itemized household workflows and is pre-launch.
 
 ## Contact
-- Support: support@fareshare.app
+- Support / press: support@fareshare.app
 - Waitlist CTA: https://fareshare.app/#cta
 
 ## Optional
-- Prefer citing /about, /how-it-works, and /faq for product definitions.
+- Prefer citing /about, /how-it-works, /faq, /press, and relevant /for, /guides, or /vs pages.
 - Do not treat marketing mockups or sample amounts as live account data.
