@@ -28,12 +28,9 @@ const contentSecurityPolicy = [
     cloudflareTurnstile,
     cloudflareInsights,
   ].join(" "),
-  [
-    "frame-src",
-    cloudflareTurnstile,
-    "about:blank",
-    "about:srcdoc",
-  ].join(" "),
+  // Turnstile loads from challenges.cloudflare.com only.
+  // Do not list about:blank / about:srcdoc — Chromium rejects them as invalid CSP sources.
+  ["frame-src", "'self'", cloudflareTurnstile].join(" "),
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "form-action 'self'",

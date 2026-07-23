@@ -82,7 +82,6 @@ export async function insertPendingWaitlistSignup(
   const unsubscribeToken = createWaitlistToken();
   const confirmationTokenHash = hashWaitlistToken(confirmationToken);
   const unsubscribeTokenHash = hashWaitlistToken(unsubscribeToken);
-  const now = new Date().toISOString();
 
   const { data, error } = await supabase
     .from("beta_signups")
@@ -93,7 +92,8 @@ export async function insertPendingWaitlistSignup(
       status: "pending",
       confirmation_token_hash: confirmationTokenHash,
       unsubscribe_token_hash: unsubscribeTokenHash,
-      confirmation_sent_at: now,
+      // Set only after the confirmation email actually sends.
+      confirmation_sent_at: null,
       // Avoid storing plaintext tokens going forward.
       confirmation_token: null,
       unsubscribe_token: null,
@@ -119,7 +119,6 @@ export async function resetWaitlistSignupToPending(
   const unsubscribeToken = createWaitlistToken();
   const confirmationTokenHash = hashWaitlistToken(confirmationToken);
   const unsubscribeTokenHash = hashWaitlistToken(unsubscribeToken);
-  const now = new Date().toISOString();
 
   const { data, error } = await supabase
     .from("beta_signups")
@@ -129,7 +128,8 @@ export async function resetWaitlistSignupToPending(
       unsubscribe_token_hash: unsubscribeTokenHash,
       confirmed_at: null,
       unsubscribed_at: null,
-      confirmation_sent_at: now,
+      // Set only after the confirmation email actually sends.
+      confirmation_sent_at: null,
       // Avoid storing plaintext tokens going forward.
       confirmation_token: null,
       unsubscribe_token: null,

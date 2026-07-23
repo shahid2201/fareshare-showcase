@@ -7,7 +7,11 @@ import { GlowButton } from "./ui/GlowButton";
 import { MarketingDisclaimer } from "./MarketingDisclaimer";
 import { SafeInput } from "./ui/SafeInput";
 import { SafeLink } from "./ui/SafeLink";
-import { TurnstileWidget, isTurnstileEnabled } from "@/components/TurnstileWidget";
+import {
+  TurnstileWidget,
+  isTurnstileEnabled,
+  type TurnstileWidgetHandle,
+} from "@/components/TurnstileWidget";
 import { useCsrfToken } from "@/components/CsrfProvider";
 import { SITE_DISCLAIMERS } from "@/lib/disclaimers";
 import { COMING_SOON_COPY } from "@/lib/marketing-content";
@@ -21,12 +25,18 @@ export function CTASection() {
   const [honeypot, setHoneypot] = useState("");
   const [turnstileToken, setTurnstileToken] = useState("");
   const formStartedAtRef = useRef(Date.now());
+  const turnstileRef = useRef<TurnstileWidgetHandle>(null);
   const turnstileRequired = isTurnstileEnabled();
   const { token, loading: csrfLoading, error: csrfError, refreshToken } = useCsrfToken();
 
   useEffect(() => {
     formStartedAtRef.current = Date.now();
   }, []);
+
+  function clearTurnstile() {
+    setTurnstileToken("");
+    turnstileRef.current?.reset();
+  }
 
   const canSubmit =
     Boolean(token) &&
@@ -95,17 +105,17 @@ export function CTASection() {
 
       if (!response.ok) {
         setError(payload.error ?? "Unable to submit your request.");
-        setTurnstileToken("");
+        clearTurnstile();
         return;
       }
 
       setSuccess(payload.message ?? "Check your email to confirm your spot on the waitlist.");
       setEmail("");
-      setTurnstileToken("");
+      clearTurnstile();
       formStartedAtRef.current = Date.now();
     } catch {
       setError("Unable to submit your request. Please try again.");
-      setTurnstileToken("");
+      clearTurnstile();
     } finally {
       setSubmitting(false);
     }
@@ -173,9 +183,10 @@ export function CTASection() {
               />
               {turnstileRequired ? (
                 <TurnstileWidget
+                  ref={turnstileRef}
                   onToken={setTurnstileToken}
-                  onExpire={() => setTurnstileToken("")}
-                  onError={() => setTurnstileToken("")}
+                  onExpire={clearTurnstile}
+                  onError={clearTurnstile}
                 />
               ) : null}
               <div className="w-full [&>button]:block [&>button]:w-full">

@@ -28,6 +28,14 @@ import type {
   WaitlistSignupTokens,
 } from "@/lib/waitlist/types";
 
+function logDevConfirmationLink(confirmationToken: string, reason: string): void {
+  const siteUrl = getShowcaseSiteUrl();
+  console.warn(
+    `[waitlist] ${reason} — confirmation link:`,
+    `${siteUrl}/waitlist/confirm?token=${encodeURIComponent(confirmationToken)}`,
+  );
+}
+
 export async function sendWaitlistConfirmationEmail(
   signup: WaitlistSignupRow,
   tokens: WaitlistSignupTokens,
@@ -36,13 +44,7 @@ export async function sendWaitlistConfirmationEmail(
 
   if (!isWaitlistEmailConfigured()) {
     if (process.env.NODE_ENV !== "production") {
-      const siteUrl = getShowcaseSiteUrl();
-      console.warn(
-        "[waitlist] SMTP not configured — confirmation link:",
-        `${siteUrl}/waitlist/confirm?token=${encodeURIComponent(
-          confirmationToken,
-        )}`,
-      );
+      logDevConfirmationLink(confirmationToken, "SMTP not configured");
       return;
     }
 
@@ -54,13 +56,24 @@ export async function sendWaitlistConfirmationEmail(
     unsubscribeToken,
   });
 
-  await sendTransactionalEmail({
-    to: signup.email,
-    subject: content.subject,
-    text: content.text,
-    html: content.html,
-    listUnsubscribeUrl: content.listUnsubscribeUrl,
-  });
+  try {
+    await sendTransactionalEmail({
+      to: signup.email,
+      subject: content.subject,
+      text: content.text,
+      html: content.html,
+      listUnsubscribeUrl: content.listUnsubscribeUrl,
+    });
+  } catch (error) {
+    // Outlook/Microsoft often disables basic SMTP auth; don't block local testing.
+    if (process.env.NODE_ENV !== "production") {
+      console.warn("[waitlist] SMTP send failed:", error);
+      logDevConfirmationLink(confirmationToken, "SMTP send failed");
+      return;
+    }
+
+    throw error;
+  }
 }
 
 export async function sendWaitlistWelcomeEmail(
@@ -80,13 +93,22 @@ export async function sendWaitlistWelcomeEmail(
     unsubscribeToken,
   });
 
-  await sendTransactionalEmail({
-    to: signup.email,
-    subject: content.subject,
-    text: content.text,
-    html: content.html,
-    listUnsubscribeUrl: content.listUnsubscribeUrl,
-  });
+  try {
+    await sendTransactionalEmail({
+      to: signup.email,
+      subject: content.subject,
+      text: content.text,
+      html: content.html,
+      listUnsubscribeUrl: content.listUnsubscribeUrl,
+    });
+  } catch (error) {
+    if (process.env.NODE_ENV !== "production") {
+      console.warn("[waitlist] SMTP send failed — welcome email skipped:", error);
+      return;
+    }
+
+    throw error;
+  }
 }
 
 function canResendConfirmation(signup: WaitlistSignupRow): boolean {

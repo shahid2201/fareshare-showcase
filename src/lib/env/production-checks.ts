@@ -36,11 +36,9 @@ export function getWaitlistProductionCheck(): ProductionCheck {
     missing.push("RATE_LIMIT_SALT");
   }
 
-  const siteUrl =
-    process.env.SHOWCASE_SITE_URL?.trim() ??
-    process.env.NEXT_PUBLIC_SITE_URL?.trim();
-
-  if (!siteUrl) {
+  // Prefer explicit site URL; fall back to getShowcaseSiteUrl (production default).
+  const siteUrl = getShowcaseSiteUrl();
+  if (!siteUrl || /localhost|127\.0\.0\.1/i.test(siteUrl)) {
     missing.push("SHOWCASE_SITE_URL or NEXT_PUBLIC_SITE_URL");
   }
 

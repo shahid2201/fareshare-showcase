@@ -28,6 +28,9 @@ export async function POST(request: Request) {
 
   const productionCheck = getWaitlistProductionCheck();
   if (!productionCheck.ok) {
+    console.error(
+      `[waitlist] signup unavailable — missing: ${productionCheck.missing.join(", ")}`,
+    );
     return jsonError("Waitlist signup is temporarily unavailable.", 503);
   }
 
@@ -105,6 +108,15 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     console.error("[waitlist] signup failed:", error);
+
+    const message = error instanceof Error ? error.message : "";
+    if (/535|EAUTH|Authentication unsuccessful|basic authentication/i.test(message)) {
+      return jsonError(
+        "Confirmation email could not be sent. Email login is blocked by the mail provider — check SMTP settings.",
+        500,
+      );
+    }
+
     return jsonError("Unable to complete your waitlist signup right now.", 500);
   }
 }

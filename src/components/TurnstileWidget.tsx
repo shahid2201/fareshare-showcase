@@ -1,7 +1,12 @@
 "use client";
 
 import Script from "next/script";
-import { useCallback, useEffect, useRef } from "react";
+import {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+} from "react";
 
 import { TURNSTILE_SCRIPT_URL, TURNSTILE_SITE_KEY } from "@/lib/turnstile/constants";
 
@@ -11,59 +16,95 @@ type TurnstileWidgetProps = {
   onError?: () => void;
 };
 
-export function TurnstileWidget({ onToken, onExpire, onError }: TurnstileWidgetProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const widgetIdRef = useRef<string | null>(null);
-  const scriptReadyRef = useRef(false);
+export type TurnstileWidgetHandle = {
+  reset: () => void;
+};
 
-  const renderWidget = useCallback(() => {
-    if (!scriptReadyRef.current || !containerRef.current || !window.turnstile) {
-      return;
-    }
+export const TurnstileWidget = forwardRef<TurnstileWidgetHandle, TurnstileWidgetProps>(
+  function TurnstileWidget({ onToken, onExpire, onError }, ref) {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const widgetIdRef = useRef<string | null>(null);
+    const onTokenRef = useRef(onToken);
+    const onExpireRef = useRef(onExpire);
+    const onErrorRef = useRef(onError);
 
-    if (widgetIdRef.current) {
-      window.turnstile.remove(widgetIdRef.current);
-      widgetIdRef.current = null;
-    }
+    onTokenRef.current = onToken;
+    onExpireRef.current = onExpire;
+    onErrorRef.current = onError;
 
-    widgetIdRef.current = window.turnstile.render(containerRef.current, {
-      sitekey: TURNSTILE_SITE_KEY,
-      theme: "dark",
-      callback: onToken,
-      "expired-callback": onExpire,
-      "error-callback": onError,
-    });
-  }, [onError, onExpire, onToken]);
-
-  useEffect(() => {
-    renderWidget();
-
-    return () => {
-      if (widgetIdRef.current && window.turnstile) {
-        window.turnstile.remove(widgetIdRef.current);
-        widgetIdRef.current = null;
+    const renderWidget = () => {
+      if (widgetIdRef.current || !containerRef.current || !window.turnstile) {
+        return;
       }
+
+      widgetIdRef.current = window.turnstile.render(containerRef.current, {
+        sitekey: TURNSTILE_SITE_KEY,
+        theme: "dark",
+        callback: (token) => onTokenRef.current(token),
+        "expired-callback": () => onExpireRef.current?.(),
+        "error-callback": () => onErrorRef.current?.(),
+      });
     };
-  }, [renderWidget]);
 
-  if (!TURNSTILE_SITE_KEY) {
-    return null;
-  }
+    const renderWidgetRef = useRef(renderWidget);
+    renderWidgetRef.current = renderWidget;
 
-  return (
-    <>
-      <Script
-        src={TURNSTILE_SCRIPT_URL}
-        strategy="afterInteractive"
-        onLoad={() => {
-          scriptReadyRef.current = true;
-          renderWidget();
-        }}
-      />
-      <div ref={containerRef} className="flex justify-center" />
-    </>
-  );
-}
+    useImperativeHandle(ref, () => ({
+      reset: () => {
+        if (widgetIdRef.current && window.turnstile) {
+          window.turnstile.reset(widgetIdRef.current);
+        }
+      },
+    }));
+
+    useEffect(() => {
+      let cancelled = false;
+
+      const tryRender = () => {
+        if (!cancelled) {
+          renderWidgetRef.current();
+        }
+      };
+
+      if (window.turnstile) {
+        tryRender();
+      } else {
+        // Script may already be in the document from a prior mount without onLoad firing again.
+        const existing = document.querySelector<HTMLScriptElement>(
+          `script[src="${TURNSTILE_SCRIPT_URL}"]`,
+        );
+        if (existing) {
+          existing.addEventListener("load", tryRender);
+        }
+      }
+
+      return () => {
+        cancelled = true;
+        if (widgetIdRef.current && window.turnstile) {
+          window.turnstile.remove(widgetIdRef.current);
+          widgetIdRef.current = null;
+        }
+      };
+    }, []);
+
+    if (!TURNSTILE_SITE_KEY) {
+      return null;
+    }
+
+    return (
+      <>
+        <Script
+          src={TURNSTILE_SCRIPT_URL}
+          strategy="afterInteractive"
+          onLoad={() => {
+            renderWidgetRef.current();
+          }}
+        />
+        <div ref={containerRef} className="flex justify-center" />
+      </>
+    );
+  },
+);
 
 export function isTurnstileEnabled(): boolean {
   return Boolean(TURNSTILE_SITE_KEY);
